@@ -1,0 +1,17 @@
+--PROCEDIMIENTO ALMACENADO QUE MUESTRE LA CANTIDAD FALLECIDOS
+create or replace function total_fallecidos(
+IN persona_fallecida varchar,
+	OUT total_personas_fallecidas varchar
+
+)
+as $BODY$
+begin 
+	select count(distinct tumba.f_id) into total_personas_fallecidas
+	from tumba
+	inner join fallecido on fallecido.f_id = tumba.f_id
+	where nombre_fallecido = persona_fallecida;
+	
+end
+$BODY$
+language plpgsql;
+select * from total_fallecidos('JUAN');
