@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportSOL" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="524a982d-7dc5-4af4-b27b-ea0d737f94f4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+NOMBRE_CEMENTERIO,
+DIRECCION_CEMENTERIO,
+TELEFONO_CEMENTERIO,
+EMAIL_CEMENTERIO,
+NOMBRE_FALLECIDO,
+APELLIDO_FALLECIDO,
+CAUSA_MUERTE,
+F_EDAD,
+SEXO_FALLECIDO AS SEXO_FALLECIDO,
+COUNT(SEXO_FALLECIDO)as FALLECIDOS_MENORES_DE_EDAD
+FROM
+PUBLIC.DETALLEENTIERRO
+INNER JOIN PUBLIC.FALLECIDO ON FALLECIDO.F_ID = DETALLEENTIERRO.F_ID
+INNER JOIN CEMENTERIO on CEMENTERIO.FUN_ID = CEMENTERIO.FUN_ID
+WHERE
+(SEXO_FALLECIDO like '%F%') OR (SEXO_FALLECIDO like '%M%') OR FALLECIDO.F_EDAD<18
+GROUP BY
+ NOMBRE_CEMENTERIO,
+ DIRECCION_CEMENTERIO,
+ TELEFONO_CEMENTERIO,
+ EMAIL_CEMENTERIO,
+NOMBRE_FALLECIDO,
+APELLIDO_FALLECIDO,
+CAUSA_MUERTE,
+F_EDAD,
+SEXO_FALLECIDO;]]>
+	</queryString>
+	<field name="nombre_cementerio" class="java.lang.String"/>
+	<field name="direccion_cementerio" class="java.lang.String"/>
+	<field name="telefono_cementerio" class="java.math.BigDecimal"/>
+	<field name="email_cementerio" class="java.lang.String"/>
+	<field name="nombre_fallecido" class="java.lang.String"/>
+	<field name="apellido_fallecido" class="java.lang.String"/>
+	<field name="causa_muerte" class="java.lang.String"/>
+	<field name="f_edad" class="java.lang.Integer"/>
+	<field name="sexo_fallecido" class="java.lang.String"/>
+	<field name="fallecidos_menores_de_edad" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="92" y="20" width="100" height="20" uuid="a0766cad-e1b6-41c2-80c1-89f58563784f"/>
+				<text><![CDATA[CEMENTERIO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="227" y="20" width="100" height="20" uuid="e37c550c-ec34-45a0-a6ea-cff06460e645"/>
+				<textFieldExpression><![CDATA[$F{nombre_cementerio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="108" y="59" width="100" height="20" uuid="37526c08-f1c8-4651-9f25-025c445f5066"/>
+				<textFieldExpression><![CDATA[$F{direccion_cementerio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="59" width="100" height="20" uuid="6ad9b22a-c4a3-4ba8-a050-ee1c036edcb7"/>
+				<textFieldExpression><![CDATA[$F{telefono_cementerio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="59" width="68" height="20" uuid="fea80a65-f25f-4deb-a534-5e48c584716c"/>
+				<text><![CDATA[DIRECCION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="59" width="63" height="20" uuid="a8156d94-57a4-4fa4-960d-276faa1a54fd"/>
+				<text><![CDATA[TELEFONO:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="108" y="3" width="100" height="20" uuid="40f58771-1f29-44f4-b789-f9124da907b0"/>
+				<text><![CDATA[FALLECIDOS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="8" y="36" width="100" height="20" uuid="7f2fe80e-db20-44a8-9d0a-22495f01dcb4"/>
+				<text><![CDATA[SEXO:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="8" y="70" width="100" height="20" uuid="cb051326-1e79-496f-abd1-5db2b880c989"/>
+				<textFieldExpression><![CDATA[$F{nombre_fallecido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="137" y="70" width="100" height="20" uuid="9ec67d87-34df-42b7-ba56-d4ea0103e279"/>
+				<textFieldExpression><![CDATA[$F{apellido_fallecido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="0" width="100" height="20" uuid="ca813202-7735-4bec-b527-d936d457fff5"/>
+				<textFieldExpression><![CDATA[$F{sexo_fallecido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="37" width="100" height="20" uuid="5d0e387d-7f9b-4c46-940b-d1ee00a3aa62"/>
+				<text><![CDATA[NOMBRES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="37" width="100" height="20" uuid="0847a3bd-bad0-486a-860b-972688fa4322"/>
+				<text><![CDATA[APELLIDOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="37" width="100" height="20" uuid="f16c4b9a-2a4f-4b2b-ba4f-df16611ebffd"/>
+				<text><![CDATA[EDAD:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="275" y="70" width="100" height="20" uuid="101f3c50-47d3-4b24-8e7b-d4b6f4707336"/>
+				<textFieldExpression><![CDATA[$F{f_edad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="407" y="37" width="123" height="20" uuid="f6373e75-349c-4853-b68b-a0300ee46347"/>
+				<text><![CDATA[CAUSA DE MUERTE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="407" y="70" width="123" height="20" uuid="aa82c4b9-59df-49a0-822c-ada112a8c282"/>
+				<textFieldExpression><![CDATA[$F{causa_muerte}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="149" y="34" width="100" height="20" uuid="253b0338-79c1-4b9c-a6f7-5c7ab6993055"/>
+				<textFieldExpression><![CDATA[$F{email_cementerio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="12" y="34" width="125" height="20" uuid="6b56750b-6e6d-41fc-a303-2aab16ee7294"/>
+				<text><![CDATA[CORREO ELECTRONICO:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
