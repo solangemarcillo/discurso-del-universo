@@ -1,0 +1,19 @@
+--cursor para obtener todos los mantenimientos realizados por el personal de LIMPIEZA Y CUIDADOS DE TUMBAS
+do $$
+declare 
+contador decimal =0;
+total Record;
+--INICIO DEL CURSOR
+totalmantenimientos Cursor for select * from empleado,tipoempleado,mantenimiento, detallemantenimiento
+where empleado.em_id = empleado.em_id and 
+empleado.tipo_id = 5 and detallemantenimiento.id_mantenimiento =  detallemantenimiento.id_mantenimiento and
+detallemantenimiento.em_id = detallemantenimiento.em_id and tipoempleado.descripcion_tipoempleado = 'LIMPIEZA Y CUIDADO DE TUMBAS'
+and mantenimiento.id_mantenimiento = mantenimiento.id_mantenimiento ;
+begin
+for total in totalmantenimientos loop
+contador = contador+count(total.id_mantenimiento);
+Raise Notice 'empleado: %,nombre: %, tipo_empleado: %, mantenimiento: %, sector: %,fecha: %,  hora: %',
+total.tipo_id,total.em_nombre,total.descripcion_tipoempleado,total.observacion_detallemante,total.sector_mantenimento,total.fecha_mantemiento,total.hora_mantenimiento;
+end loop;
+end $$
+Language 'plpgsql';
